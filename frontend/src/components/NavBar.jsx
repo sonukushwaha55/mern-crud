@@ -3,6 +3,7 @@ import CreatePage from '../pages/CreatePage'
 import { FaShoppingCart, FaPlus, FaMoon, FaSun } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
+
 const NavBar = () => {
   const [darkMode, setDarkMode] = useState(false);
 
@@ -10,6 +11,7 @@ const NavBar = () => {
     setDarkMode((prev) => !prev);
     document.documentElement.classList.toggle("dark");
   };
+ 
   return (
     <>
  <nav className={`flex justify-between items-center px-16 py-4 shadow-md ${darkMode ? "bg-gray-800" : "bg-gray-200"}`}>
@@ -23,9 +25,11 @@ const NavBar = () => {
 
       <div className="flex items-center gap-4">
         <button
+        
           className={`p-2 rounded-md ${darkMode ? "bg-gray-600 text-white" : "bg-blue-500 text-white"} hover:opacity-80`}
         >
-          <FaPlus size={16} />
+          
+          <Link to={"/create"}><FaPlus size={16} /></Link>
         </button>
 
         <button

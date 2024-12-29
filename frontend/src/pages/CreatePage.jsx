@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useProductStore } from '../store/product';
+import { ToastContainer, toast } from 'react-toastify';
 
 const CreatePage = () => {
 
@@ -8,18 +10,22 @@ const CreatePage = () => {
     image:"",
   });
 
-  const handleChange = (e) =>{
-    const {name, price, image} = e.target
-  }
-
-  const handleSubmit = (e) =>{
+  const {createProduct} = useProductStore()
+  const handleSubmit = async (e) =>{
     e.preventDefault();
-    console.log("product submitted");
-    
-  }
+    const {success, message} = await createProduct(newProduct)
+    console.log("Success: ",success );
+    console.log("Message: ",message );
+    setNewProduct({
+      name:"",
+      price:"",
+      image:""
+    });
+  };
+
   return (
     <div>
-      <div className="min-h-screen flex items-center justify-center bg-gray-200">
+      <div className={`min-h-screen flex items-center justify-center bg-gray-200 `}>
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-md bg-white-200 p-8 rounded-md shadow-lg">
@@ -33,7 +39,8 @@ const CreatePage = () => {
             type="text"
             id="name"
             name="name"
-           
+           value={newProduct.name}
+           onChange={(e) => setNewProduct({...newProduct, name:e.target.value})}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter product name"
             required
@@ -48,6 +55,8 @@ const CreatePage = () => {
             type="number"
             id="price"
             name="price"
+            value={newProduct.price}
+           onChange={(e) => setNewProduct({...newProduct, price:e.target.value})}
            
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter product price"
@@ -63,7 +72,8 @@ const CreatePage = () => {
             type="text"
             id="image"
             name="image"
-
+            value={newProduct.image}
+            onChange={(e) => setNewProduct({...newProduct, image:e.target.value})}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter image URL"
             required
